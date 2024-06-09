@@ -4,51 +4,41 @@ PATH
     ruby_rag (0.1.0)
       dotenv
       langchainrb
+      ruby-openai (~> 6.3.0)
       thor
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.1.3.4)
-      base64
-      bigdecimal
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      connection_pool (>= 2.2.5)
-      drb
-      i18n (>= 1.6, < 2)
-      minitest (>= 5.1)
-      mutex_m
-      tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     baran (0.1.12)
-    base64 (0.2.0)
-    bigdecimal (3.1.8)
     colorize (1.1.0)
-    concurrent-ruby (1.3.2)
-    connection_pool (2.4.1)
     diff-lcs (1.5.1)
     dotenv (3.1.2)
-    drb (2.2.1)
-    i18n (1.14.5)
-      concurrent-ruby (~> 1.0)
+    event_stream_parser (1.0.0)
+    faraday (2.9.1)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     json-schema (4.3.0)
       addressable (>= 2.8)
-    langchainrb (0.10.0)
-      activesupport (>= 7.0.8)
+    langchainrb (0.13.3)
       baran (~> 0.1.9)
       colorize (~> 1.1.0)
       json-schema (~> 4)
       matrix
       pragmatic_segmenter (~> 0.3.0)
-      tiktoken_ruby (~> 0.0.7)
       to_bool (~> 2.0.0)
       zeitwerk (~> 2.5)
     matrix (0.4.2)
-    minitest (5.23.1)
-    mutex_m (0.2.0)
-    parallel (1.24.0)
+    multipart-post (2.4.1)
+    net-http (0.4.1)
+      uri
+    parallel (1.25.1)
     parser (3.3.2.0)
       ast (~> 2.4.1)
       racc
@@ -58,10 +48,9 @@ GEM
     racc (1.8.0)
     rainbow (3.1.1)
     rake (13.2.1)
-    rb_sys (0.9.87)
     regexp_parser (2.9.2)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.2.9)
+      strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -86,26 +75,28 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (1.31.3)
       parser (>= 3.3.1.0)
+    ruby-openai (6.3.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
     strscan (3.1.0)
     thor (1.3.1)
-    tiktoken_ruby (0.0.9)
-      rb_sys (= 0.9.87)
     to_bool (2.0.0)
-    tzinfo (2.0.6)
-      concurrent-ruby (~> 1.0)
     unicode (0.4.4.4)
     unicode-display_width (1.8.0)
+    uri (0.13.0)
     zeitwerk (2.6.15)
 
 PLATFORMS
-  x86_64-darwin-20
+  x86_64-darwin-22
 
 DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 0.80)
+  ruby-openai (~> 6.3.0)
   ruby_rag!
 
 BUNDLED WITH
-   2.2.3
+   2.3.7

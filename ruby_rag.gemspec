@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "dotenv"
   spec.add_dependency "langchainrb"
+  spec.add_dependency "ruby-openai", "~> 6.3.0"
   spec.add_dependency "thor"
 
   # Uncomment to register a new dependency of your gem
