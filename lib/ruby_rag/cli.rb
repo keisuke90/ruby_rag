@@ -23,7 +23,7 @@ module RubyRag
         messages << user_message(user_input)
         print "AI:"
         response = ""
-        llm.chat(messages: messages, stream: true) do | chunk |
+        llm.chat(messages: messages) do | chunk |
           content = chunk.dig('delta', 'content') rescue nil
           next unless content
           print content
