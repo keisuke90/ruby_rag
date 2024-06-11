@@ -18,10 +18,18 @@ module RubyRag
       messages = []
 
       loop do
-        user_input = ask('You: ')
+        print "You:"
+        user_input = ask('')
         messages << user_message(user_input)
-        response = llm.chat(messages: messages).completion
-        puts "AI: #{response}"
+        print "AI:"
+        response = ""
+        llm.chat(messages: messages, stream: true) do | chunk |
+          content = chunk.dig('delta', 'content') rescue nil
+          next unless content
+          print content
+          response += content
+        end
+        print "\n"
         messages << system_message(response)
       end
     end
