@@ -34,6 +34,26 @@ module RubyRag
       end
     end
 
+    desc "vector", "vector search"
+    def vector(query)
+      Dotenv.load
+      llm = Langchain::LLM::OpenAI.new(
+        api_key: ENV['OPENAI_API_KEY'],
+        default_options: {
+          chat_completion_model_name: 'gpt-3.5-turbo',
+        }
+      )
+
+      client = Langchain::Vectorsearch::Pinecone.new(
+        environment: ENV['PINECONE_ENVIRONMENT'],
+        api_key: ENV['PINECONE_API_KEY'],
+        index_name: ENV['PINECONE_INDEX_NAME'],
+        llm: llm
+      )
+
+      client.ask(question: query)
+    end
+
     private
 
     def user_message(message)
