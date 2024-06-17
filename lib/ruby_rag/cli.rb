@@ -8,12 +8,7 @@ module RubyRag
     desc "chat", "Start chat"
     def chat
       Dotenv.load
-      llm = Langchain::LLM::OpenAI.new(
-        api_key: ENV['OPENAI_API_KEY'],
-        default_options: {
-          chat_completion_model_name: 'gpt-3.5-turbo',
-        }
-      )
+      llm = llm(ENV['OPENAI_API_KEY'], 'gpt-3.5-turbo')
 
       messages = []
 
@@ -37,12 +32,7 @@ module RubyRag
     desc "vector", "vector search"
     def vector(query)
       Dotenv.load
-      llm = Langchain::LLM::OpenAI.new(
-        api_key: ENV['OPENAI_API_KEY'],
-        default_options: {
-          chat_completion_model_name: 'gpt-3.5-turbo',
-        }
-      )
+      llm = llm(ENV['OPENAI_API_KEY'], 'gpt-3.5-turbo')
 
       client = Langchain::Vectorsearch::Pinecone.new(
         environment: ENV['PINECONE_ENVIRONMENT'],
@@ -54,7 +44,22 @@ module RubyRag
       client.ask(question: query)
     end
 
+    desc "assistant", "Assistant"
+    def assistant
+
+    end
+
+
     private
+
+    def llm(api_key, model)
+      Langchain::LLM::OpenAI.new(
+        api_key: api_key,
+        default_options: {
+          chat_completion_model_name: model,
+        }
+      )
+    end
 
     def user_message(message)
       { role: 'user', content: message }
