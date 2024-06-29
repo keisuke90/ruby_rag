@@ -29,19 +29,34 @@ module RubyRag
       end
     end
 
-    desc "vector", "vector search"
-    def vector(query)
+    desc "RAG", "RAG"
+    def ask(query)
       Dotenv.load
       llm = llm(ENV['OPENAI_API_KEY'], 'gpt-3.5-turbo')
+      client = pinecone(ENV['PINECONE_ENVIRONMENT'],
+                        ENV['PINECONE_API_KEY'],
+                        ENV['PINECONE_INDEX_NAME'],
+                        llm)
 
-      client = Langchain::Vectorsearch::Pinecone.new(
-        environment: ENV['PINECONE_ENVIRONMENT'],
-        api_key: ENV['PINECONE_API_KEY'],
-        index_name: ENV['PINECONE_INDEX_NAME'],
-        llm: llm
-      )
+      res = client.ask(question: query)
+      puts res.raw_response.dig("choices", 0, "message", "content")
+    end
 
-      client.ask(question: query)
+    desc "similarity", "Similarity"
+    def vector(query, k = 5)
+      Dotenv.load
+      llm = llm(ENV['OPENAI_API_KEY'], 'gpt-3.5-turbo')
+      client = pinecone(ENV['PINECONE_ENVIRONMENT'],
+                        ENV['PINECONE_API_KEY'],
+                        ENV['PINECONE_INDEX_NAME'],
+                        llm)
+
+      res = client.similarity_search(query: query, k: k)
+      res = res.map {|item| item["metadata"]["content"] }
+      res.each_with_index do |content, idx|
+        puts "No.#{idx + 1}================"
+        puts content
+      end
     end
 
     desc "assistant", "Assistant"
@@ -72,6 +87,15 @@ module RubyRag
         default_options: {
           chat_completion_model_name: model,
         }
+      )
+    end
+
+    def pinecone(environment, api_key, index_name, llm)
+      Langchain::Vectorsearch::Pinecone.new(
+        environment: environment,
+        api_key: api_key,
+        index_name: index_name,
+        llm: llm
       )
     end
 
