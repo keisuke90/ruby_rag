@@ -42,7 +42,7 @@ module RubyRag
       puts res.raw_response.dig("choices", 0, "message", "content")
     end
 
-    desc "vector", "Similarity"
+    desc "similarity", "Similarity"
     def vector(query, k = 5)
       Dotenv.load
       llm = llm(ENV['OPENAI_API_KEY'], 'gpt-3.5-turbo')
