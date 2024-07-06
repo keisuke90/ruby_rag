@@ -60,7 +60,7 @@ module RubyRag
     end
 
     desc "assistant", "Assistant"
-    def assistant
+    def assistant(content)
       Dotenv.load
       llm = llm(ENV['OPENAI_API_KEY'], 'gpt-4o')
       thread = Langchain::Thread.new
@@ -68,11 +68,13 @@ module RubyRag
         llm: llm,
         thread: thread,
         tools: [
-          Langchain::Tool::RubyCodeInterpreter.new
+          Langchain::Tool::RubyCodeInterpreter.new,
+          Langchain::Tool::FileSystem.new
         ]
       )
-      assistant.add_message content: "(1000 + 10) * (1000 - 10)を計算して"
+      assistant.add_message(content: content)
       assistant.run(auto_tool_execution: true)
+      puts assistant.messages
       assistant.messages.each do |message|
         puts "#{message.role}: #{message.content}"
       end
