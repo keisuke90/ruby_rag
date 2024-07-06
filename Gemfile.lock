@@ -140,6 +140,8 @@ GEM
     unicode (0.4.4.4)
     unicode-display_width (1.8.0)
     uri (0.13.0)
+    wikipedia-client (1.17.0)
+      addressable (~> 2.7)
     zeitwerk (2.6.15)
 
 PLATFORMS
@@ -153,6 +155,7 @@ DEPENDENCIES
   ruby-openai (~> 6.3.0)
   ruby_rag!
   safe_ruby (~> 1.0.4)
+  wikipedia-client (~> 1.17.0)
 
 BUNDLED WITH
    2.3.7
